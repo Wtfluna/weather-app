@@ -1,7 +1,27 @@
-import { useState } from "react";
+import "./style.scss";
+import Card from "./Card";
 
 function App() {
-  return <> </>;
+  return (
+    <>
+      <h1>Weather</h1>
+      <form id="form">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search By Location"
+          autoComplete="off"
+        />
+      </form>
+      <div className="cards">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
+    </>
+  );
 }
 
 export default App;
