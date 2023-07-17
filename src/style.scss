@@ -11,48 +11,70 @@ body {
   justify-content: center;
   min-height: 100vh;
   flex-direction: column;
+  background-image: url(./assets/cloud-blue-sky.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 
   h1 {
     text-align: center;
+    font-size: 50px;
   }
-#form {
+  #form {
     display: flex;
     justify-content: center;
     padding-top: 5%;
-input {
-  padding: 1rem;
-  border-radius: 25px;
-  border: none;
-  background-color: #fff;
-  font-family: inherit;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  min-width: 300px;
-  font-size: 1rem;
+    input {
+      padding: 1rem;
+      border-radius: 25px;
+      border: none;
+      background-color: #fff;
+      font-family: inherit;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      min-width: 300px;
+      font-size: 1rem;
 
-  &:focus {
-    outline: none;
+      &:focus {
+        outline: none;
+      }
+    }
+    #submit {
+      padding: 1rem;
+      border: solid 0.5px black;
+      border-radius: 25px;
+      background-color: transparent;
+      font-family: inherit;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      min-width: 120px;
+      font-size: 1rem;
+      margin-left: 1%;
+      &:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+      }
+    }
   }
 }
-}
-}
 .cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 10%;
+  .card {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    order: 5;
-    margin-top: 10%;
-    .card {
-        border: dashed 1px rgb(79, 73, 136);
-        border-radius: 30px;
-        padding: 3%;
-        &__date {
-            text-align: center;
-        }
-        &__picture {
-            width: 100px;
-        }
-        &__temperature {
-            text-align: center;
-        }
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: dashed 1px rgb(79, 73, 136);
+    border-radius: 30px;
+    padding: 3%;
+    margin-bottom: 3%;
+    flex-basis: 22%;
+    &__date {
     }
+    &__picture {
+      width: 100px;
+    }
+    &__temperature {
+    }
+  }
 }

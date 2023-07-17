@@ -12,8 +12,16 @@ function App() {
           placeholder="Search By Location"
           autoComplete="off"
         />
+        <button id="submit" type="submit">
+          Search
+        </button>
       </form>
       <div className="cards">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
         <Card />
         <Card />
         <Card />
