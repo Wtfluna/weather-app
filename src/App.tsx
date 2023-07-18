@@ -1,7 +1,7 @@
 import "./style.scss";
 import Card from "./Card";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export interface Weather {
   date: string;
@@ -15,11 +15,7 @@ function App() {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
 
-  const weathers: Weather[] = [
-    { date: "18/07", icon: "./src/assets/sun.png", temperature: 28 },
-    { date: "19/07", icon: "./src/assets/sun.png", temperature: 46 },
-    { date: "20/07", icon: "./src/assets/sun.png", temperature: 32 },
-  ];
+  const [weathers, setWeathers] = useState([]);
 
   // Comportement
   const handleFormSubmit = async (e) => {
@@ -34,19 +30,24 @@ function App() {
         {
           params: {
             q: enteredValue,
-            appid: "00782a9b7d335a8491b0f238077e40d6c",
+            appid: "0782a9b7d335a8491b0f238077e40d6c",
             cnt: 5, // Récupérer les données météorologiques pour les 5 prochains jours
+            units: "metric", // Obtenir les données de température en degrés Celsius
           },
         },
       );
 
       const weatherData = response.data.list.map((item) => ({
-        date: item.dt_txt,
-        icon: `https://openweathermap.org/img/w/${item.weather[0].icon}.png`,
+        date: new Date(item.dt_txt).toLocaleDateString("fr-FR", {
+          day: "2-digit",
+          month: "2-digit",
+        }),
+        icon: `http://openweathermap.org/img/w/${item.weather[0].icon}.png`,
         temperature: item.main.temp,
       }));
 
       console.log(weatherData); // Affiche les données météorologiques extraites pour les 5 prochains jours
+      setWeathers(weatherData); // Met à jour le state avec les données reçues de l'API;
     } catch (error) {
       console.log("Error:", error);
     }
