@@ -1,7 +1,7 @@
 import "./style.scss";
 import Card from "./Card";
 import axios from "axios";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
 export interface Weather {
   date: string;
@@ -13,10 +13,10 @@ function App() {
   // State
   const [searchValue, setSearchValue] = useState("");
   const [city, setCity] = useState("");
-  const [weathers, setWeathers] = useState([]);
+  const [weathers, setWeathers] = useState<Weather[]>([]); // Ajouter l'annotation de type Weather[] ici
   const [photoUrl, setPhotoUrl] = useState("");
 
-  function formatDate(dateString) {
+  function formatDate(dateString: string | number | Date) {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -24,10 +24,10 @@ function App() {
   }
 
   // Comportement
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Empêche le comportement par défaut du formulaire
 
-    const enteredValue = e.target.elements.search.value;
+    const enteredValue = searchValue;
     setSearchValue(enteredValue);
 
     try {
@@ -46,11 +46,17 @@ function App() {
 
       setCity(weatherResponse.data.city.name);
 
-      const weatherData = weatherResponse.data.list.map((item) => ({
-        date: formatDate(item.dt_txt),
-        icon: `http://openweathermap.org/img/w/${item.weather[0].icon}.png`,
-        temperature: Math.round(item.main.temp),
-      }));
+      const weatherData = weatherResponse.data.list.map(
+        (item: {
+          dt_txt: any;
+          weather: { icon: any }[];
+          main: { temp: number };
+        }) => ({
+          date: formatDate(item.dt_txt),
+          icon: `http://openweathermap.org/img/w/${item.weather[0].icon}.png`,
+          temperature: Math.round(item.main.temp),
+        }),
+      );
 
       console.log(weatherData); // Affiche les données météorologiques extraites pour les 5 prochains jours dans la console
       setWeathers(weatherData); // Met à jour le state avec les données reçues de l'API
@@ -79,7 +85,7 @@ function App() {
       console.log("Error:", error);
     }
 
-    e.target.elements.search.value = ""; // Réinitialise le champ de texte après la soumission
+    setSearchValue(""); // Réinitialise le champ de texte après la soumission
   };
 
   // Render
@@ -92,6 +98,8 @@ function App() {
           id="search"
           placeholder="Search By Location"
           autoComplete="off"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
         <button id="submit" type="submit">
           Search

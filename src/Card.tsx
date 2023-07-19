@@ -1,4 +1,10 @@
-function Card({ weather }) {
+interface Weather {
+  date: string;
+  icon: string;
+  temperature: number;
+}
+
+function Card({ weather }: { weather: Weather }) {
   return (
     <article className="card">
       <h2 className="card__date">{weather.date}</h2>
